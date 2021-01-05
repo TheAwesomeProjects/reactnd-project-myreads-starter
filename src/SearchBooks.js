@@ -38,7 +38,7 @@ class SearchBooks extends Component {
                 {...b, shelf: existingBook.shelf}
                 :
                 {...b, shelf: 'none'}
-            });
+            }).filter(b => b.imageLinks !== undefined);
 
             this.setState(() => ({
               newBooks: filteretBooks
