@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
 import PropTypes from 'prop-types'
-import ChangeShelf from './ChangeShelf'
+import BooksGrid from './BooksGrid'
 import { Link } from 'react-router-dom'
 
 class SearchBooks extends Component {
@@ -21,7 +21,7 @@ class SearchBooks extends Component {
 
   searchBooks = (query) => {
     this.setState(() => ({
-      query: query.trim()
+      query: query
     }))
     if (query) {
       BooksAPI.search(query)
@@ -74,29 +74,12 @@ class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid">
-            {newBooks.map((book) => (
-              <li key={book.id} className='book'>
-                <div className='book-top'>
-                  <div className="book-cover"
-                       style={{
-                        width: 128, height: 193, backgroundSize: "cover", backgroundImage: `url(${book.imageLinks.thumbnail})`
-                       }}
-                  ></div>
-                  <div className="book-shelf-changer">
-                    <ChangeShelf
-                      currentValue={book.shelf}
-                      onChangeOption={(newOption) => {
-                        this.handeNewShelf(book, newOption)
-                      }}
-                    />
-                  </div>
-                ></div>
-                <div className="book-title">{book.title}</div>
-                <div className="book-authors">{book.authors}</div>
-              </li>
-            ))}
-          </ol>
+            <BooksGrid
+              books={newBooks}
+              onChangeShelf={(book, newShelf) => {
+                this.handeShelfUpdate(book, newShelf)
+              }}
+            />
         </div>
       </div>
     )

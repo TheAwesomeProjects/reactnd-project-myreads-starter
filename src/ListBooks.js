@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ChangeShelf from './ChangeShelf'
+import BooksGrid from './BooksGrid'
 import { Link } from 'react-router-dom'
 
 class ListBooks extends Component {
@@ -37,29 +37,12 @@ class ListBooks extends Component {
               <div key={shelve.name} className="bookshelf">
                 <h2 className="bookshelf-title">{shelve.name}</h2>
                 <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    {shelve.books.map((book) => (
-                      <li key={book.id} className='book'>
-                        <div className='book-top'>
-                          <div className="book-cover"
-                               style={{
-                                width: 128, height: 193, backgroundSize: "cover", backgroundImage: `url(${book.imageLinks.thumbnail})`
-                               }}
-                          ></div>
-                          <div className="book-shelf-changer">
-                            <ChangeShelf
-                              currentValue={book.shelf}
-                              onChangeOption={(newOption) => {
-                                this.handeNewShelf(book, newOption)
-                              }}
-                            />
-                          </div>
-                        ></div>
-                        <div className="book-title">{book.title}</div>
-                        <div className="book-authors">{book.authors}</div>
-                      </li>
-                    ))}
-                  </ol>
+                  <BooksGrid
+                    books={shelve.books}
+                    onChangeShelf={(book, newShelf) => {
+                      this.handeShelfUpdate(book, newShelf)
+                    }}
+                  />
                 </div>
              </div>
              ))}
